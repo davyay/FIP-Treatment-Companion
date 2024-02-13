@@ -35,7 +35,7 @@ Access resources on handling and caring for a cat with FIP.
 Document your cat's progress with photos and reports.
 Receive insights and statistics on your cat's treatment progress, including survival likelihood based on treatment adherence and other factors.
 
-## How to Use (WIP, will hopefully implement the following)
+## How to Use (WIP subject to change)
 
 Download and Install: Download the FIP Treatment Tracker app from the appropriate app store for your device.
 
