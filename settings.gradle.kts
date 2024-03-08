@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "FIP Treatment Companion"
 include(":app")
+ 
