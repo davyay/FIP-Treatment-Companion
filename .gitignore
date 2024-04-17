@@ -1,0 +1,5 @@
+# Ignore the Maven target directory where build files are stored
+target/
+
+# Ignore the effective-pom.xml file
+effective-pom.xml
