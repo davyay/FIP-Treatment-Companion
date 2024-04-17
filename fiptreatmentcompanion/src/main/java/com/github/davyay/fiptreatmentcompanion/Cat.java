@@ -1,3 +1,5 @@
+package com.github.davyay.fiptreatmentcompanion;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

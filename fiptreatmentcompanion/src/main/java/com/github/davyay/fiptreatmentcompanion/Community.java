@@ -1,3 +1,5 @@
+package com.github.davyay.fiptreatmentcompanion;
+
 import java.util.ArrayList;
 import java.util.List;
 
