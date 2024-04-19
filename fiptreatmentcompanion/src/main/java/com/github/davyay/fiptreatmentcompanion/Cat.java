@@ -6,17 +6,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Cat {
     // Fields
     private String name;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
     private LocalDate dateOfBirth;
-    
-    private double weight;
+    private WeightTracker weightTracker;  // Handles weight tracking
+    private Treatment treatment;  // Handles treatment records
 
     // Constructor
-    public Cat(String name, String dob, double weight) {
+    public Cat(String name, String dob) {
         this.name = name;
         this.dateOfBirth = LocalDate.parse(dob, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-        this.weight = weight;
+        this.weightTracker = new WeightTracker();  // Initialize the weight tracker
+        this.treatment = new Treatment(this);  // Initialize the treatment object
     }
 
     // Getters and Setters
@@ -28,21 +28,25 @@ public class Cat {
         this.name = name;
     }
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public String getDateOfBirth() {
+        return dateOfBirth.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     }
 
     public void setDateOfBirth(String dob) {
         this.dateOfBirth = LocalDate.parse(dob, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     }
 
-    public double getWeight() {
-        return weight;
+    public WeightTracker getWeightTracker() {
+        return weightTracker;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public Treatment getTreatment() {
+        return treatment;
+    }
+
+    // Method to add a weight record through the Cat class
+    public void addWeightRecord(double weight, LocalDate date) {
+        this.weightTracker.addWeightRecord(weight, date);
     }
 
     // String Representation
@@ -51,7 +55,8 @@ public class Cat {
         return "Cat{" +
                "name='" + name + '\'' +
                ", dateOfBirth=" + dateOfBirth.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")) +
-               ", weight=" + weight +
+               ", weightTracker=" + weightTracker +
+               ", treatment=" + treatment +
                '}';
     }
 }

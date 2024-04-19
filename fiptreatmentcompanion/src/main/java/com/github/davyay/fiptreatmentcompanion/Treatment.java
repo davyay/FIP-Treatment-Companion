@@ -1,5 +1,4 @@
 package com.github.davyay.fiptreatmentcompanion;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,10 +11,11 @@ public class Treatment {
     private List<TreatmentRecord> treatmentRecords;
     private double dosageRatio; // Ratio of medication (ml per lb)
 
-    public Treatment(Cat cat, String initialMedicationName, double initialDosageRatio) {
+    // Constructor 
+    public Treatment(Cat cat) {
         this.cat = cat;
-        this.currentMedicationName = initialMedicationName;
-        this.dosageRatio = initialDosageRatio;
+        this.currentMedicationName = "";
+        this.dosageRatio = 0.0;
         this.treatmentRecords = new ArrayList<>();
     }
 
@@ -28,13 +28,14 @@ public class Treatment {
     }
 
     public void addMedicationRecord(LocalDateTime time) {
-        double dosage = calculateDosage();
-        TreatmentRecord record = new TreatmentRecord(time, currentMedicationName, dosage, cat.getWeight());
+        double currentWeight = cat.getWeightTracker().getMostRecentWeight(); // Assuming such a method is added to WeightTracker
+        double dosage = calculateDosage(currentWeight);
+        TreatmentRecord record = new TreatmentRecord(time, currentMedicationName, dosage, currentWeight);
         treatmentRecords.add(record);
     }
 
-    private double calculateDosage() {
-        return cat.getWeight() * dosageRatio;
+    private double calculateDosage(double weight) {
+        return weight * dosageRatio;
     }
 
     public List<TreatmentRecord> getTreatmentRecords() {
@@ -59,10 +60,10 @@ public class Treatment {
     }
 
     // Inner class to store individual treatment records
-    private class TreatmentRecord {
+    class TreatmentRecord {
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy hh:mma")
         private LocalDateTime time;
-        
+
         private String medicationName;
         private double dosage;
         private double weight;
