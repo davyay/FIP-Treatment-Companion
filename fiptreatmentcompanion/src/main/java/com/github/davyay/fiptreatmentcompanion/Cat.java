@@ -1,12 +1,15 @@
 package com.github.davyay.fiptreatmentcompanion;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Cat {
     // Fields
     private String name;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
     private LocalDate dateOfBirth;
+    
     private double weight;
 
     // Constructor
@@ -25,8 +28,9 @@ public class Cat {
         this.name = name;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
     public void setDateOfBirth(String dob) {

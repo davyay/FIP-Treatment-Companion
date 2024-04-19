@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Treatment {
     private Cat cat;
@@ -59,7 +60,9 @@ public class Treatment {
 
     // Inner class to store individual treatment records
     private class TreatmentRecord {
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy hh:mma")
         private LocalDateTime time;
+        
         private String medicationName;
         private double dosage;
         private double weight;
