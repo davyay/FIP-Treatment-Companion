@@ -3,3 +3,15 @@ target/
 
 # Ignore the effective-pom.xml file
 effective-pom.xml
+
+# Ignore all log files
+*.log
+
+# Ignore all temporary files
+*.tmp
+
+# Ignore all compiled class files
+*.class
+
+# Ignore the bin directory
+bin/
