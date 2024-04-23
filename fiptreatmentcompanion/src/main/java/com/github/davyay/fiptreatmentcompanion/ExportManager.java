@@ -3,7 +3,6 @@ package com.github.davyay.fiptreatmentcompanion;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ExportManager {
 
@@ -36,9 +35,4 @@ public class ExportManager {
         }
     }
 
-    // Optional: Method to serialize Cat object to JSON using Jackson
-    public void writeCatToJsonFile(Cat cat, String jsonFilename) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new FileWriter(jsonFilename), cat);
-    }
 }
