@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class FileManager {
+public class ExportManager {
 
     // Method to write cat details to a text file
     public void writeCatDetailsToFile(Cat cat, String filename) throws IOException {
