@@ -15,3 +15,6 @@ effective-pom.xml
 
 # Ignore the bin directory
 bin/
+
+# Ignore temp files used to test
+storage/
