@@ -45,6 +45,9 @@ public class WeightTracker {
 
         private double weight;
 
+        public WeightRecord() {
+        }
+
         public WeightRecord(LocalDate date, double weight) {
             this.date = date;
             this.weight = weight;
