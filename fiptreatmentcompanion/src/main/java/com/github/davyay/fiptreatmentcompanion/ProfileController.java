@@ -1,12 +1,19 @@
 package com.github.davyay.fiptreatmentcompanion;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.io.IOException;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 
 public class ProfileController {
     @FXML private TextField nameField;
@@ -18,6 +25,11 @@ public class ProfileController {
 
     private CatManager catManager = new CatManager(); // Instance of CatManager
     private Cat currentCat;
+    private Stage primaryStage; // Stage injected from the Main controller
+
+    public void setPrimaryStage(Stage stage) {
+        this.primaryStage = stage;
+    }
 
     // Method to set the existing Cat profile in the controller
     public void setCatProfile(Cat cat) {
@@ -47,21 +59,18 @@ public class ProfileController {
     
         try {
             if (currentCat == null) {
-                // Create a new Cat object using the provided data
                 currentCat = new Cat(nameField.getText(), dobField.getText());
             } else {
-                // Update the existing Cat object with the new profile data
                 currentCat.setName(nameField.getText());
                 currentCat.setDateOfBirth(dobField.getText());
             }
-            // Update other attributes of the Cat object
             currentCat.getWeightTracker().addWeightRecord(Double.parseDouble(initialWeight.getText()), LocalDate.now());
             currentCat.getTreatment().updateMedicationName(medicationName.getText());
             currentCat.getTreatment().updateDosageRatio(Double.parseDouble(dosageRatio.getText()));
     
-            // Save the updated profile
             catManager.saveCatProfile(currentCat);
             System.out.println("Profile Saved Successfully");
+            redirectToHome(); // Redirect to the home screen after successful save
         } catch (IOException e) {
             System.err.println("Failed to save cat profile: " + e.getMessage());
         } catch (NumberFormatException | DateTimeParseException e) {
@@ -69,7 +78,6 @@ public class ProfileController {
             dobError.setText("Invalid input! Please check the data format.");
         }
     }
-    
 
     private boolean validateDate(String date) {
         try {
@@ -79,4 +87,26 @@ public class ProfileController {
             return false;
         }
     }
+
+    private void redirectToHome() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomeScreen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+    
+            // Retrieve the HomeScreenController
+            HomeScreenController controller = loader.getController();
+            
+            if (controller != null && currentCat != null) {
+                controller.setCatProfile(currentCat);  // Set the current cat in the HomeScreenController
+            }
+    
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load the home screen.", ButtonType.OK).show();
+        }
+    }
+    
 }

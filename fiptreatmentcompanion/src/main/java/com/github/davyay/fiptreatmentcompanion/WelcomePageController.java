@@ -26,10 +26,10 @@ public class WelcomePageController {
         fileChooser.setTitle("Open Cat Profile File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
         File selectedFile = fileChooser.showOpenDialog(primaryStage);
-
+    
         if (selectedFile != null) {
             try {
-                Cat loadedCat = catManager.loadCatProfile(selectedFile.getName());
+                Cat loadedCat = catManager.loadCatProfile(selectedFile);
                 showHome(loadedCat);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -37,14 +37,17 @@ public class WelcomePageController {
             }
         }
     }
+    
 
     @FXML
     protected void handleCreateProfile() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Profile.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
+            ProfileController profileController = loader.getController();
+            profileController.setPrimaryStage(primaryStage);  // Pass the stage to the next controller
+
+            primaryStage.setScene(new Scene(root));
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,8 +61,10 @@ public class WelcomePageController {
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
-            ProfileController controller = loader.getController();
+            // Set the controller to HomeScreenController
+            HomeScreenController controller = loader.getController();
             controller.setCatProfile(cat);
+            controller.setPrimaryStage(primaryStage);
 
             primaryStage.setScene(scene);
             primaryStage.show();
