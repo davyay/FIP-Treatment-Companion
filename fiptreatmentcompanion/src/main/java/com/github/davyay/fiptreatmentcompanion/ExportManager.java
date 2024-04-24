@@ -7,7 +7,7 @@ import java.io.IOException;
 public class ExportManager {
 
     // Method to write cat details to a text file
-    public void writeCatDetailsToFile(Cat cat, String filename) throws IOException {
+    public void writeCatDetailsToFile(Cat cat, String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write("Name of the Cat: " + cat.getName());
             writer.newLine();
@@ -32,7 +32,10 @@ public class ExportManager {
                              ", Medication: " + record.getMedicationName());
                 writer.newLine();
             }
+            System.out.println("Data exported successfully to " + filename);
+        } catch (IOException e) {
+            System.err.println("Failed to write cat details to file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-
 }

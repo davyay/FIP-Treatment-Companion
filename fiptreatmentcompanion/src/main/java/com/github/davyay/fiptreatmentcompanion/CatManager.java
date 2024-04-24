@@ -26,13 +26,13 @@ public class CatManager {
         objectMapper.writeValue(new File(basePath, filename), cat);
     }
 
-    public Cat loadCatProfile(String catName) throws IOException {
-        String filename = generateFilename(catName);
+    public Cat loadCatProfile(File file) throws IOException {
         // Load a cat profile from a file
-        return objectMapper.readValue(new File(basePath, filename), Cat.class);
+        return objectMapper.readValue(file, Cat.class);
     }
+    
 
     private String generateFilename(String catName) {
-        return catName + "Profile.json"; // Append 'Profile.json' to the cat's name
+        return catName.replaceAll("\\s+", "") + "Profile.json";
     }
 }
