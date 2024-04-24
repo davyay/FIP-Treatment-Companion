@@ -57,7 +57,7 @@ public class HomeScreenController {
     private void exportData() {
         ExportManager exportManager = new ExportManager(); // Create an instance of ExportManager
         try {
-            exportManager.writeCatDetailsToFile(currentCat, currentCat.getName()+"records.txt"); // Use the instance to call the method
+            exportManager.writeCatDetailsToFile(currentCat, currentCat.getName()+"Records.txt"); // Use the instance to call the method
             System.out.println("Data exported successfully.");
         } catch (Exception e) {
             System.err.println("Error exporting data: " + e.getMessage());
