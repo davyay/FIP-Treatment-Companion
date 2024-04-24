@@ -12,7 +12,10 @@ public class Cat {
     private LocalDate dateOfBirth;
     private WeightTracker weightTracker;  // Handles weight tracking
     private Treatment treatment;  // Handles treatment records
-
+    
+    public Cat() {
+    }
+    
     // Constructor
     @JsonCreator
     public Cat(@JsonProperty("name") String name, @JsonProperty("dob") String dob) {        this.name = name;
