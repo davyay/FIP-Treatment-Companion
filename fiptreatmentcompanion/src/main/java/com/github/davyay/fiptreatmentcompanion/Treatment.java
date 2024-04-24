@@ -19,6 +19,14 @@ public class Treatment {
         this.treatmentRecords = new ArrayList<>();
     }
 
+    public String getCurrentMedicationName() {
+        return currentMedicationName;
+    }
+
+    public double getDosageRatio() {
+        return dosageRatio;
+    }
+
     public void updateMedicationName(String newMedicationName) {
         this.currentMedicationName = newMedicationName;
     }
@@ -28,13 +36,13 @@ public class Treatment {
     }
 
     public void addMedicationRecord(LocalDateTime time) {
-        double currentWeight = cat.getWeightTracker().getMostRecentWeight(); // Assuming such a method is added to WeightTracker
+        double currentWeight = cat.getWeightTracker().getMostRecentWeight();
         double dosage = calculateDosage(currentWeight);
         TreatmentRecord record = new TreatmentRecord(time, currentMedicationName, dosage, currentWeight);
         treatmentRecords.add(record);
     }
 
-    private double calculateDosage(double weight) {
+    public double calculateDosage(double weight) {
         return weight * dosageRatio;
     }
 
