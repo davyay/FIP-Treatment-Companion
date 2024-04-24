@@ -2,8 +2,7 @@ package com.github.davyay.fiptreatmentcompanion;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 public class Cat {
     // Fields
@@ -17,8 +16,7 @@ public class Cat {
     }
     
     // Constructor
-    @JsonCreator
-    public Cat(@JsonProperty("name") String name, @JsonProperty("dob") String dob) {        this.name = name;
+    public Cat(String name, String dob) {        this.name = name;
         this.dateOfBirth = LocalDate.parse(dob, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         this.weightTracker = new WeightTracker();  // Initialize the weight tracker
         this.treatment = new Treatment(this);  // Initialize the treatment object
