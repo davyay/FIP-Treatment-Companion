@@ -12,6 +12,10 @@ public class Treatment {
     private double dosageRatio; // Ratio of medication (ml per lb)
 
     // Constructor 
+
+    public Treatment() {
+    }
+
     public Treatment(Cat cat) {
         this.cat = cat;
         this.currentMedicationName = "";
@@ -75,6 +79,9 @@ public class Treatment {
         private String medicationName;
         private double dosage;
         private double weight;
+
+        public TreatmentRecord() {
+        }
 
         public TreatmentRecord(LocalDateTime time, String medicationName, double dosage, double weight) {
             this.time = time;
