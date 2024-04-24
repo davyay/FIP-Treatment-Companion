@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" prefHeight="944.0" prefWidth="628.0" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.davyay.fiptreatmentcompanion.TreatmentPageController">
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+    <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="200.0" fitWidth="200.0">
+         <image>
+            <Image url="@Treatment.png" />
+         </image>
+      </ImageView>
+        <Label text="Current Medication Name: " />
+        <Label fx:id="medicationNameLabel" />
+        <Label text="Current Dosage Ratio (ml per lb): " />
+        <Label fx:id="dosageRatioLabel" />
+        <Label text="Current Cat's Weight: " />
+        <Label fx:id="catWeightLabel" />
+        <Label text="Calculated Current Dose: " />
+        <Label fx:id="currentDoseLabel" />
+
+        <Label style="-fx-font-style: italic" text="Make sure your cat's weight is up to date" textFill="#ff0909" />
+
+        <TextField fx:id="newMedName" promptText="Update Medication Name" />
+        <TextField fx:id="newDosageRatio" promptText="Update Dosage Ratio" />
+        <Button onAction="#handleUpdateTreatmentDetails" text="Update Treatment Details" />
+        <Label fx:id="updateError" textFill="red" />
+
+        <TextField fx:id="doseDateTime" promptText="Enter Date/Time of Dose (MM/dd/yyyy hh:mm)" />
+        <Button onAction="#handleRecordDose" text="Record Dose Given" />
+        <Button onAction="#handleHome" text="Home" />
+    </children>
+</VBox>
