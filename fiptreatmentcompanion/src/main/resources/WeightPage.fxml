@@ -31,15 +31,20 @@
             <Image url="@Weight.png" />
          </image>
       </ImageView>
-        <LineChart fx:id="weightChart">
+        <LineChart fx:id="weightChart" legendVisible="false">
             <xAxis>
                 <CategoryAxis label="Date" />
             </xAxis>
             <yAxis>
-                <NumberAxis label="Weight (kg)" />
+                <NumberAxis label="Weight (lb)" />
             </yAxis>
         </LineChart>
-        <TextField fx:id="weightInput" promptText="Enter current weight (kg)" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Record new weight">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+        <TextField fx:id="weightInput" promptText="Enter current weight (lb)" />
         <Label fx:id="weightError" textFill="red" />
         <Button onAction="#handleUpdateWeight" text="Update Weight" />
         <Button onAction="#handleHome" text="Home" />

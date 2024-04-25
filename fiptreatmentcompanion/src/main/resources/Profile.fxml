@@ -25,11 +25,16 @@
             <Image url="@Profile.png" />
          </image>
       </ImageView>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
         <TextField fx:id="nameField" promptText="Enter Cat's Name" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DOB" />
         <TextField fx:id="dobField" promptText="Enter Date of Birth (MM/dd/yyyy)" />
         <Text fx:id="dobError" fill="RED" text="" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Weight" />
         <TextField fx:id="initialWeight" promptText="Enter Initial Weight (lb)" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Current Medication name" />
         <TextField fx:id="medicationName" promptText="Enter Initial Medication Name" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dosage Ratio" />
         <TextField fx:id="dosageRatio" promptText="Enter Dosage Ratio (unit per lb)" />
         <Button onAction="#handleSaveProfile" text="Save Cat Profile" />
     </children>

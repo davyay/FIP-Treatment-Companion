@@ -37,11 +37,17 @@
         <Label fx:id="currentDoseLabel" />
 
         <Label style="-fx-font-style: italic" text="Make sure your cat's weight is up to date" textFill="#ff0909" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="If your cat's medication has changed, please update below:" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Medication Name" />
 
         <TextField fx:id="newMedName" promptText="Update Medication Name" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Dosage Ratio" />
         <TextField fx:id="newDosageRatio" promptText="Update Dosage Ratio" />
         <Button onAction="#handleUpdateTreatmentDetails" text="Update Treatment Details" />
         <Label fx:id="updateError" textFill="red" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Record Treatment Administered" />
+      <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter date and time of dose in the following format: MM/dd/yyyy hh:mm " />
+      <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Use 24HR time format" />
 
         <TextField fx:id="doseDateTime" promptText="Enter Date/Time of Dose (MM/dd/yyyy hh:mm)" />
         <Button onAction="#handleRecordDose" text="Record Dose Given" />
