@@ -1,8 +1,15 @@
 package com.github.davyay.fiptreatmentcompanion;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -18,7 +25,17 @@ public class TreatmentPageController {
     @FXML private Label updateError;
     @FXML private Button homeButton;
 
-    private Cat cat; // Assume the cat object is passed or set somewhere in your application flow
+    private Cat cat;
+    private Stage primaryStage; 
+
+    public void setCatProfile(Cat cat) {
+        this.cat = cat;
+        updateTreatmentDetails();
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
 
     public TreatmentPageController() {
         // This constructor is intentionally empty
@@ -26,7 +43,6 @@ public class TreatmentPageController {
 
     @FXML
     private void initialize() {
-        updateTreatmentDetails();
     }
 
     private void updateTreatmentDetails() {
@@ -64,7 +80,22 @@ public class TreatmentPageController {
 
     @FXML
     private void handleHome() {
-        // Add the logic to navigate back to the home screen
-        System.out.println("Navigating back to home...");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomeScreen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+
+            // Set the controller to HomeScreenController
+            HomeScreenController controller = loader.getController();
+            controller.setCatProfile(cat);
+            controller.setPrimaryStage(primaryStage);
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load the home screen.", ButtonType.OK).show();
+        }
     }
+
 }

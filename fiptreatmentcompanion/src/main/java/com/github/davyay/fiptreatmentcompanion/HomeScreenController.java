@@ -1,10 +1,12 @@
 package com.github.davyay.fiptreatmentcompanion;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 public class HomeScreenController {
 
@@ -21,32 +23,65 @@ public class HomeScreenController {
 
     @FXML
     private void handleWeight() {
-        loadScene("/WeightTracker.fxml", "Weight Tracker");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/WeightPage.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+
+            // Set the controller to WeightPageController
+            WeightPageController controller = loader.getController();
+            controller.setCatProfile(currentCat);
+            controller.setPrimaryStage(primaryStage);
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load the Weight screen.", ButtonType.OK).show();
+        }
     }
 
     @FXML
     private void handleTreatment() {
-        loadScene("/TreatmentRecords.fxml", "Treatment Records");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TreatmentPage.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+
+            // Set the controller to TreatmentPageController
+            TreatmentPageController controller = loader.getController();
+            controller.setCatProfile(currentCat);
+            controller.setPrimaryStage(primaryStage);
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load the Treatment screen.", ButtonType.OK).show();
+        }
     }
 
     @FXML
     private void handleCommunity() {
-        loadScene("/CommunityResources.fxml", "Community Resources");
-    }
-
-    private void loadScene(String fxmlPath, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CommunityLinks.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            primaryStage.setTitle(title);
+
+            // Set the controller to CommunityLinksController
+            CommunityLinksController controller = loader.getController();
+            controller.setCatProfile(currentCat);
+            controller.setPrimaryStage(primaryStage);
+
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (IOException e) {
-            System.err.println("Failed to load the scene for " + title + ": " + e.getMessage());
+        } catch (Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load the Community Links screen.", ButtonType.OK).show();
         }
     }
+
+    
 
     @FXML
     private void handleExport() {
@@ -55,12 +90,13 @@ public class HomeScreenController {
     }
 
     private void exportData() {
-        ExportManager exportManager = new ExportManager(); // Create an instance of ExportManager
+        ExportManager exportManager = new ExportManager();
         try {
-            exportManager.writeCatDetailsToFile(currentCat, currentCat.getName()+"Records.txt"); // Use the instance to call the method
+            exportManager.writeCatDetailsToFile(currentCat, currentCat.getName() + "Records.txt");
             System.out.println("Data exported successfully.");
         } catch (Exception e) {
             System.err.println("Error exporting data: " + e.getMessage());
         }
     }
 }
+
