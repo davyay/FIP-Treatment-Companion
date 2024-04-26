@@ -9,7 +9,7 @@ public class Treatment {
     private Cat cat;
     private String currentMedicationName; // Stores the current medication name
     private List<TreatmentRecord> treatmentRecords;
-    private double dosageRatio; // Ratio of medication (ml per lb)
+    private double dosageRatio; // Ratio of medication (unit per lb)
 
     // Constructor 
 
@@ -40,11 +40,25 @@ public class Treatment {
     }
 
     public void addMedicationRecord(LocalDateTime time) {
-        double currentWeight = cat.getWeightTracker().getMostRecentWeight();
+        if (cat == null) {
+            throw new IllegalStateException("Cat object is null.");
+        }
+        
+        WeightTracker weightTracker = cat.getWeightTracker();
+        if (weightTracker == null) {
+            throw new IllegalStateException("WeightTracker is null.");
+        }
+    
+        Double currentWeight = weightTracker.getMostRecentWeight();
+        if (currentWeight == null || currentWeight <= 0) {
+            throw new IllegalArgumentException("Current weight is invalid.");
+        }
+    
         double dosage = calculateDosage(currentWeight);
         TreatmentRecord record = new TreatmentRecord(time, currentMedicationName, dosage, currentWeight);
         treatmentRecords.add(record);
     }
+    
 
     public double calculateDosage(double weight) {
         return weight * dosageRatio;
