@@ -16,7 +16,8 @@ public class Cat {
     }
     
     // Constructor
-    public Cat(String name, String dob) {        this.name = name;
+    public Cat(String name, String dob) {        
+        this.name = name;
         this.dateOfBirth = LocalDate.parse(dob, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         this.weightTracker = new WeightTracker();  // Initialize the weight tracker
         this.treatment = new Treatment(this);  // Initialize the treatment object
