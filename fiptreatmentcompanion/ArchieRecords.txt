@@ -2,4 +2,5 @@ Name of the Cat: Archie
 Date of Birth: 04/08/2021
 Weight Records:
 Date: 2024-04-25, Weight: 7.0 kg
+Date: 2024-04-26, Weight: 10.0 kg
 Treatment Records:

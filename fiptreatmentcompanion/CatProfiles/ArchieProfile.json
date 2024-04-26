@@ -1,1 +1,1 @@
-{"name":"Archie","dateOfBirth":"04/08/2021","weightTracker":{"weightRecords":[{"weightdate":"2024-04-25","weight":7.0}],"mostRecentWeight":7.0},"treatment":{"currentMedicationName":"Seka","treatmentRecords":[],"dosageRatio":0.1}}
+{"name":"Archie","dateOfBirth":"04/08/2021","weightTracker":{"weightRecords":[{"weightdate":"2024-04-25","weight":7.0},{"weightdate":"2024-04-26","weight":10.0}],"mostRecentWeight":10.0},"treatment":{"currentMedicationName":"Seka","treatmentRecords":[],"dosageRatio":0.1}}
