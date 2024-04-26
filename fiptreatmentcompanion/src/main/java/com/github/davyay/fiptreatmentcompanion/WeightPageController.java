@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import java.io.IOException;
 import java.time.LocalDate;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,6 +48,7 @@ public class WeightPageController {
             LocalDate currentDate = LocalDate.now(); // Current date for the weight record
             currentCat.addWeightRecord(weight, currentDate); // Add to weight tracker through Cat
             updateChart(currentDate.toString(), weight); // Update chart
+            saveCatData(); // Save the updated cat data
             weightInput.clear(); // Clear the input field
             weightError.setText(""); // Clear error message if any
         } catch (NumberFormatException e) {
@@ -54,6 +56,16 @@ public class WeightPageController {
         }
     }
 
+    private void saveCatData() {
+        try {
+            CatManager catManager = new CatManager();
+            catManager.saveCatProfile(currentCat); // Specify the file path
+        } catch (IOException e) {
+            weightError.setText("Failed to save data: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
     // Load initial weight data into the chart
     private void loadWeightData() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();

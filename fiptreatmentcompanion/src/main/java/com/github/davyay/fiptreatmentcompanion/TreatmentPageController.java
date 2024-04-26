@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -25,11 +26,11 @@ public class TreatmentPageController {
     @FXML private Label updateError;
     @FXML private Button homeButton;
 
-    private Cat cat;
+    private Cat currentCat;
     private Stage primaryStage; 
 
     public void setCatProfile(Cat cat) {
-        this.cat = cat;
+        this.currentCat = cat;
         updateTreatmentDetails();
     }
 
@@ -46,10 +47,10 @@ public class TreatmentPageController {
     }
 
     private void updateTreatmentDetails() {
-        medicationNameLabel.setText(cat.getTreatment().getCurrentMedicationName());
-        dosageRatioLabel.setText(String.format("%.2f", cat.getTreatment().getDosageRatio()));
-        catWeightLabel.setText(String.format("%.2f kg", cat.getWeightTracker().getMostRecentWeight()));
-        double dosage = cat.getTreatment().calculateDosage(cat.getWeightTracker().getMostRecentWeight());
+        medicationNameLabel.setText(currentCat.getTreatment().getCurrentMedicationName());
+        dosageRatioLabel.setText(String.format("%.2f", currentCat.getTreatment().getDosageRatio()));
+        catWeightLabel.setText(String.format("%.2f kg", currentCat.getWeightTracker().getMostRecentWeight()));
+        double dosage = currentCat.getTreatment().calculateDosage(currentCat.getWeightTracker().getMostRecentWeight());
         currentDoseLabel.setText(String.format("%.2f ml", dosage));
     }
 
@@ -58,8 +59,9 @@ public class TreatmentPageController {
         try {
             String newMedicationName = newMedName.getText().trim();
             double newRatio = Double.parseDouble(newDosageRatio.getText().trim());
-            cat.getTreatment().updateMedicationName(newMedicationName);
-            cat.getTreatment().updateDosageRatio(newRatio);
+            currentCat.getTreatment().updateMedicationName(newMedicationName);
+            currentCat.getTreatment().updateDosageRatio(newRatio);
+            saveCatData();
             updateTreatmentDetails();
             updateError.setText("Treatment details updated successfully.");
         } catch (NumberFormatException e) {
@@ -71,10 +73,21 @@ public class TreatmentPageController {
     private void handleRecordDose() {
         try {
             LocalDateTime time = LocalDateTime.parse(doseDateTime.getText(), DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
-            cat.getTreatment().addMedicationRecord(time);
+            currentCat.getTreatment().addMedicationRecord(time);
+            saveCatData();
             updateError.setText("Dose recorded successfully.");
         } catch (DateTimeParseException e) {
             updateError.setText("Error: Invalid date/time format. Please use MM/dd/yyyy HH:mm.");
+        }
+    }
+
+    private void saveCatData() {
+        try {
+            CatManager catManager = new CatManager();
+            catManager.saveCatProfile(currentCat); // Specify the file path
+        } catch (IOException e) {
+            updateError.setText("Failed to save data: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -87,7 +100,7 @@ public class TreatmentPageController {
 
             // Set the controller to HomeScreenController
             HomeScreenController controller = loader.getController();
-            controller.setCatProfile(cat);
+            controller.setCatProfile(currentCat);
             controller.setPrimaryStage(primaryStage);
 
             primaryStage.setScene(scene);
