@@ -70,7 +70,7 @@ public class ProfileController {
     
             catManager.saveCatProfile(currentCat);
             System.out.println("Profile Saved Successfully");
-            redirectToHome(); // Redirect to the home screen after successful save
+            showHome(currentCat); // Redirect to the home screen after successful save
         } catch (IOException e) {
             System.err.println("Failed to save cat profile: " + e.getMessage());
         } catch (NumberFormatException | DateTimeParseException e) {
@@ -88,19 +88,17 @@ public class ProfileController {
         }
     }
 
-    private void redirectToHome() {
+    private void showHome(Cat cat) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomeScreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-    
-            // Retrieve the HomeScreenController
+
+            // Set the controller to HomeScreenController
             HomeScreenController controller = loader.getController();
-            
-            if (controller != null && currentCat != null) {
-                controller.setCatProfile(currentCat);  // Set the current cat in the HomeScreenController
-            }
-    
+            controller.setCatProfile(cat);
+            controller.setPrimaryStage(primaryStage);
+
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception e) {
