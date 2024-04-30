@@ -90,7 +90,7 @@ public class Treatment {
     }
 
     // Inner class to store individual treatment records
-    class TreatmentRecord {
+    static class TreatmentRecord {
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy hh:mma")
         private LocalDateTime time;
 
