@@ -1,6 +1,11 @@
 Name of the Cat: Archie
 Date of Birth: 04/08/2021
 Weight Records:
-Date: 2024-04-25, Weight: 7.0 kg
-Date: 2024-04-26, Weight: 10.0 kg
+Date: 2024-04-30, Weight: 7.0 kg
 Treatment Records:
+Date/Time: 1990-06-01T07:00, Dose: 4.8999999999999995ml, Medication: Seka
+Date/Time: 1990-07-07T08:00, Dose: 4.8999999999999995ml, Medication: Seka
+Date/Time: 2020-09-09T06:00, Dose: 4.8999999999999995ml, Medication: Seka
+Date/Time: 2020-09-08T08:00, Dose: 28.0ml, Medication: seka
+Date/Time: 2020-09-09T09:00, Dose: 4.8999999999999995ml, Medication: bleka
+Date/Time: 2020-09-10T08:00, Dose: 4.8999999999999995ml, Medication: bleka
