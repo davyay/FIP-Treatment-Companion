@@ -23,6 +23,10 @@ public class Treatment {
         this.treatmentRecords = new ArrayList<>();
     }
 
+    public void setCat(Cat cat) {
+        this.cat = cat;
+    }
+
     public String getCurrentMedicationName() {
         return currentMedicationName;
     }
@@ -40,7 +44,7 @@ public class Treatment {
     }
 
     public void addMedicationRecord(LocalDateTime time) {
-        if (cat == null) {
+        if (this.cat == null) {
             throw new IllegalStateException("Cat object is null.");
         }
         

@@ -38,10 +38,6 @@ public class TreatmentPageController {
         this.primaryStage = primaryStage;
     }
 
-    public TreatmentPageController() {
-        // This constructor is intentionally empty
-    }
-
     @FXML
     private void initialize() {
     }

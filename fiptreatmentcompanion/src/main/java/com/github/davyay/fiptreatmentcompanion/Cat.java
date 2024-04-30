@@ -2,6 +2,7 @@ package com.github.davyay.fiptreatmentcompanion;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 
 public class Cat {
@@ -23,6 +24,13 @@ public class Cat {
         this.treatment = new Treatment(this);  // Initialize the treatment object
     }
 
+    @JsonSetter("treatment")
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
+        if (this.treatment != null) {
+            this.treatment.setCat(this);  // Ensuring the back-reference is set correctly
+        }
+    }
     // Getters and Setters
     public String getName() {
         return name;
