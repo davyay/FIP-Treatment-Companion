@@ -1,4 +1,5 @@
 package com.github.davyay.fiptreatmentcompanion;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -16,18 +17,27 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class TreatmentPageController {
-    @FXML private Label medicationNameLabel;
-    @FXML private Label dosageRatioLabel;
-    @FXML private Label catWeightLabel;
-    @FXML private Label currentDoseLabel;
-    @FXML private TextField newMedName;
-    @FXML private TextField newDosageRatio;
-    @FXML private TextField doseDateTime;
-    @FXML private Label updateError;
-    @FXML private Button homeButton;
+    @FXML
+    private Label medicationNameLabel;
+    @FXML
+    private Label dosageRatioLabel;
+    @FXML
+    private Label catWeightLabel;
+    @FXML
+    private Label currentDoseLabel;
+    @FXML
+    private TextField newMedName;
+    @FXML
+    private TextField newDosageRatio;
+    @FXML
+    private TextField doseDateTime;
+    @FXML
+    private Label updateError;
+    @FXML
+    private Button homeButton;
 
     private Cat currentCat;
-    private Stage primaryStage; 
+    private Stage primaryStage;
 
     public void setCatProfile(Cat cat) {
         this.currentCat = cat;
@@ -60,6 +70,8 @@ public class TreatmentPageController {
             saveCatData();
             updateTreatmentDetails();
             updateError.setText("Treatment details updated successfully.");
+            newMedName.setText(""); // Clearing the text field
+            newDosageRatio.setText(""); // Clearing the text field
         } catch (NumberFormatException e) {
             updateError.setText("Error: Invalid dosage ratio. Please enter a valid number.");
         }
@@ -68,10 +80,12 @@ public class TreatmentPageController {
     @FXML
     private void handleRecordDose() {
         try {
-            LocalDateTime time = LocalDateTime.parse(doseDateTime.getText(), DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
+            LocalDateTime time = LocalDateTime.parse(doseDateTime.getText(),
+                    DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
             currentCat.getTreatment().addMedicationRecord(time);
             saveCatData();
             updateError.setText("Dose recorded successfully.");
+            doseDateTime.setText(""); // Clearing the text field
         } catch (DateTimeParseException e) {
             updateError.setText("Error: Invalid date/time format. Please use MM/dd/yyyy HH:mm.");
         }
