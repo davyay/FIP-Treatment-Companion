@@ -5,3 +5,4 @@ Date: 2024-05-02, Weight: 7.0 lbs
 Date: 2024-05-02, Weight: 10.0 lbs
 Treatment Records:
 Date/Time: 05/10/2024 07:00AM, Dose: 7.0 units, Medication: Seka
+Date/Time: 07/03/2024 07:00AM, Dose: 7.0 units, Medication: Seka
