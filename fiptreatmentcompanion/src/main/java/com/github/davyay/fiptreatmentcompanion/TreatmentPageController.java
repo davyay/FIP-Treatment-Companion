@@ -1,42 +1,68 @@
 package com.github.davyay.fiptreatmentcompanion;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.util.Callback;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class TreatmentPageController {
     @FXML
-    private Label medicationNameLabel;
+    private Label medicationNameLabel, dosageRatioLabel, catWeightLabel, currentDoseLabel, updateError;
     @FXML
-    private Label dosageRatioLabel;
-    @FXML
-    private Label catWeightLabel;
-    @FXML
-    private Label currentDoseLabel;
-    @FXML
-    private TextField newMedName;
-    @FXML
-    private TextField newDosageRatio;
-    @FXML
-    private TextField doseDateTime;
-    @FXML
-    private Label updateError;
+    private TextField newMedName, newDosageRatio, doseDateTime;
     @FXML
     private Button homeButton;
+    @FXML
+    private TableView<Treatment.TreatmentRecord> treatmentRecordsTable;
+    @FXML
+    private TableColumn<Treatment.TreatmentRecord, String> dateColumn;
+    @FXML
+    private TableColumn<Treatment.TreatmentRecord, String> doseColumn;
+    @FXML
+    private TableColumn<Treatment.TreatmentRecord, String> medicationColumn;
 
     private Cat currentCat;
     private Stage primaryStage;
+
+    @FXML
+    private void initialize() {
+        dateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
+                return new SimpleStringProperty(data.getValue().getTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma")));
+            }
+        });
+    
+        doseColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
+                return new SimpleStringProperty(String.format("%.2f units", data.getValue().getDosage()));
+            }
+        });
+    
+        medicationColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
+                return new SimpleStringProperty(data.getValue().getMedicationName());
+            }
+        });
+    }
 
     public void setCatProfile(Cat cat) {
         this.currentCat = cat;
@@ -47,16 +73,15 @@ public class TreatmentPageController {
         this.primaryStage = primaryStage;
     }
 
-    @FXML
-    private void initialize() {
-    }
-
     private void updateTreatmentDetails() {
         medicationNameLabel.setText(currentCat.getTreatment().getCurrentMedicationName());
         dosageRatioLabel.setText(String.format("%.2f", currentCat.getTreatment().getDosageRatio()));
         catWeightLabel.setText(String.format("%.2f lb", currentCat.getWeightTracker().getMostRecentWeight()));
         double dosage = currentCat.getTreatment().calculateDosage(currentCat.getWeightTracker().getMostRecentWeight());
         currentDoseLabel.setText(String.format("%.2f units", dosage));
+    
+        // Set the items for the TableView from the currentCat's treatment records
+        treatmentRecordsTable.setItems(FXCollections.observableArrayList(currentCat.getTreatment().getTreatmentRecords()));
     }
 
     @FXML
