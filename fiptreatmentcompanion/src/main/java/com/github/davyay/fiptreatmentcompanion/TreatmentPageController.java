@@ -54,9 +54,9 @@ public class TreatmentPageController {
     private void updateTreatmentDetails() {
         medicationNameLabel.setText(currentCat.getTreatment().getCurrentMedicationName());
         dosageRatioLabel.setText(String.format("%.2f", currentCat.getTreatment().getDosageRatio()));
-        catWeightLabel.setText(String.format("%.2f kg", currentCat.getWeightTracker().getMostRecentWeight()));
+        catWeightLabel.setText(String.format("%.2f lb", currentCat.getWeightTracker().getMostRecentWeight()));
         double dosage = currentCat.getTreatment().calculateDosage(currentCat.getWeightTracker().getMostRecentWeight());
-        currentDoseLabel.setText(String.format("%.2f ml", dosage));
+        currentDoseLabel.setText(String.format("%.2f units", dosage));
     }
 
     @FXML

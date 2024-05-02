@@ -81,7 +81,7 @@ public class Treatment {
               .append(" ")
               .append(record.getMedicationName())
               .append(" ")
-              .append(String.format("%.2fml", record.getDosage()))
+              .append(String.format("%.2f units", record.getDosage()))
               .append(" ")
               .append(String.format("%.2flb", record.getWeight()))
               .append("\n");

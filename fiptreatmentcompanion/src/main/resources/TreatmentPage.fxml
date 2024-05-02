@@ -13,13 +13,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
 
-
 <VBox alignment="CENTER" prefHeight="944.0" prefWidth="628.0" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.davyay.fiptreatmentcompanion.TreatmentPageController">
-    <padding>
-        <Insets bottom="20" left="20" right="20" top="20" />
-    </padding>
-    <children>
-    
+   <padding>
+      <Insets bottom="20" left="20" right="20" top="20" />
+   </padding>
+   <children>
+
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment">
          <font>
             <Font size="48.0" />
@@ -31,34 +30,35 @@
          </image>
       </ImageView>
 
-        <Label text="Current Medication Name: " />
-        <Label fx:id="medicationNameLabel" />
-        <Label text="Current Dosage Ratio (ml per lb): " />
-        <Label fx:id="dosageRatioLabel" />
-        <Label text="Current Cat's Weight: " />
-        <Label fx:id="catWeightLabel" />
-        <Label text="Calculated Current Dose: " />
-        <Label fx:id="currentDoseLabel" />
 
-        <Label style="-fx-font-style: italic" text="Make sure your cat's weight is up to date" textFill="#ffaf0a" />
+      <Label text="Current Medication Name: " />
+      <Label fx:id="medicationNameLabel" />
+      <Label text="Current Dosage Ratio (units per lb): " />
+      <Label fx:id="dosageRatioLabel" />
+      <Label text="Current Cat's Weight: " />
+      <Label fx:id="catWeightLabel" />
+      <Label text="Calculated Current Dose: " />
+      <Label fx:id="currentDoseLabel" />
+
+      <Label style="-fx-font-style: italic" text="Make sure your cat's weight is up to date" textFill="#ffaf0a" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="If your cat's medication has changed, please update below:" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Medication Name" />
 
-        <TextField fx:id="newMedName" promptText="Update Medication Name" />
+      <TextField fx:id="newMedName" promptText="Update Medication Name" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Dosage Ratio" />
-        <TextField fx:id="newDosageRatio" promptText="Update Dosage Ratio" />
-        <Button onAction="#handleUpdateTreatmentDetails" text="Update Treatment Details" />
+      <TextField fx:id="newDosageRatio" promptText="Update Dosage Ratio" />
+      <Button onAction="#handleUpdateTreatmentDetails" text="Update Treatment Details" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Record Treatment Administered" />
       <Text fill="#ff9e00" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter date and time of dose in the following format: MM/dd/yyyy hh:mm " />
       <Text fill="#ff9e00" strokeType="OUTSIDE" strokeWidth="0.0" text="Use 24HR time format" />
 
-        <TextField fx:id="doseDateTime" promptText="Enter Date/Time of Dose (MM/dd/yyyy hh:mm)" />
-        <Button onAction="#handleRecordDose" text="Record Dose Given" />
-        <Label fx:id="updateError" textFill="red">
+      <TextField fx:id="doseDateTime" promptText="Enter Date/Time of Dose (MM/dd/yyyy hh:mm)" />
+      <Button onAction="#handleRecordDose" text="Record Dose Given" />
+      <Label fx:id="updateError" textFill="red">
          <font>
             <Font size="29.0" />
          </font>
       </Label>
-        <Button onAction="#handleHome" text="Home" />
-    </children>
+      <Button onAction="#handleHome" text="Home" />
+   </children>
 </VBox>

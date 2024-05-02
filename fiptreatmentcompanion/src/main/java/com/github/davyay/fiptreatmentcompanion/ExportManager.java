@@ -3,6 +3,7 @@ package com.github.davyay.fiptreatmentcompanion;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 public class ExportManager {
 
@@ -15,21 +16,22 @@ public class ExportManager {
             writer.newLine();
             writer.write("Weight Records:");
             writer.newLine();
-            
+
             // Iterate over weight records
             for (WeightTracker.WeightRecord record : cat.getWeightTracker().getWeightRecords()) {
-                writer.write("Date: " + record.getDate() + ", Weight: " + record.getWeight() + " kg");
+                writer.write("Date: " + record.getDate() + ", Weight: " + record.getWeight() + " lbs");
                 writer.newLine();
             }
-            
+
             writer.write("Treatment Records:");
             writer.newLine();
-            
+
             // Iterate over treatment records
             for (Treatment.TreatmentRecord record : cat.getTreatment().getTreatmentRecords()) {
-                writer.write("Date/Time: " + record.getTime() +
-                             ", Dose: " + record.getDosage() + "ml" +
-                             ", Medication: " + record.getMedicationName());
+                writer.write("Date/Time: " + record.getTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+                        + " " + record.getTime().format(DateTimeFormatter.ofPattern("hh:mma")) +
+                        ", Dose: " + record.getDosage() + " units" +
+                        ", Medication: " + record.getMedicationName());
                 writer.newLine();
             }
             System.out.println("Data exported successfully to " + filename);
