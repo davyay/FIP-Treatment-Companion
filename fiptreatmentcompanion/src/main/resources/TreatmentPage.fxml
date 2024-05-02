@@ -13,10 +13,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" prefHeight="1502.0" prefWidth="671.0" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.davyay.fiptreatmentcompanion.TreatmentPageController">
-   <padding>
-      <Insets bottom="20" left="20" right="20" top="20" />
-   </padding>
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1354.0" prefWidth="762.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.davyay.fiptreatmentcompanion.TreatmentPageController">
    <children>
 
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment">
@@ -40,11 +37,11 @@
       <Label text="Calculated Current Dose: " />
       <Label fx:id="currentDoseLabel" />
 
-      <TableView fx:id="treatmentRecordsTable" prefHeight="200.0" prefWidth="600.0">
+                  <TableView fx:id="treatmentRecordsTable" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="127.0" prefWidth="599.0">
          <columns>
             <TableColumn fx:id="dateColumn" prefWidth="150.0" text="Date/Time" />
-            <TableColumn fx:id="doseColumn" prefWidth="100.0" text="Dose (units)" />
-            <TableColumn fx:id="medicationColumn" prefWidth="350.0" text="Medication" />
+            <TableColumn fx:id="doseColumn" prefWidth="156.0" text="Dose (units)" />
+            <TableColumn fx:id="medicationColumn" prefWidth="294.0" text="Medication" />
          </columns>
       </TableView>
 
@@ -69,4 +66,7 @@
       </Label>
       <Button onAction="#handleHome" text="Home" />
    </children>
+   <padding>
+      <Insets left="5.0" right="5.0" />
+   </padding>
 </VBox>

@@ -3,6 +3,10 @@ Date of Birth: 04/24/2022
 Weight Records:
 Date: 2024-05-02, Weight: 7.0 lbs
 Date: 2024-05-02, Weight: 10.0 lbs
+Date: 2024-05-02, Weight: 5.0 lbs
 Treatment Records:
 Date/Time: 05/10/2024 07:00AM, Dose: 7.0 units, Medication: Seka
 Date/Time: 07/03/2024 07:00AM, Dose: 7.0 units, Medication: Seka
+Date/Time: 07/02/2024 07:10AM, Dose: 7.0 units, Medication: Seka
+Date/Time: 07/02/2024 07:00AM, Dose: 7.0 units, Medication: Seka
+Date/Time: 05/02/2024 05:41AM, Dose: 5.0 units, Medication: Bleka
