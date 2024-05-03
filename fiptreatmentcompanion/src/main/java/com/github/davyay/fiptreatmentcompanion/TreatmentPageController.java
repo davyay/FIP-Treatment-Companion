@@ -6,10 +6,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
-import javafx.beans.value.ObservableValue;
+import javafx.scene.control.TableCell;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.util.Callback;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,7 +32,7 @@ public class TreatmentPageController {
     @FXML
     private TableView<Treatment.TreatmentRecord> treatmentRecordsTable;
     @FXML
-    private TableColumn<Treatment.TreatmentRecord, String> dateColumn;
+    private TableColumn<Treatment.TreatmentRecord, LocalDateTime> dateColumn; // Changed to LocalDateTime
     @FXML
     private TableColumn<Treatment.TreatmentRecord, String> doseColumn;
     @FXML
@@ -43,33 +43,25 @@ public class TreatmentPageController {
 
     @FXML
     private void initialize() {
-        dateColumn.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(
-                            TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
-                        return new SimpleStringProperty(
-                                data.getValue().getTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma")));
-                    }
-                });
+        dateColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getTime()));
+        dateColumn.setCellFactory(column -> new TableCell<Treatment.TreatmentRecord, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item.format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma")));
+                }
+            }
+        });
 
-        doseColumn.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(
-                            TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
-                        return new SimpleStringProperty(String.format("%.2f units", data.getValue().getDosage()));
-                    }
-                });
-
-        medicationColumn.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(
-                            TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
-                        return new SimpleStringProperty(data.getValue().getMedicationName());
-                    }
-                });
+        doseColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
+            String.format("%.2f units", cellData.getValue().getDosage()))
+        );
+        medicationColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
+            cellData.getValue().getMedicationName())
+        );
     }
 
     public void setCatProfile(Cat cat) {
@@ -88,9 +80,7 @@ public class TreatmentPageController {
         double dosage = currentCat.getTreatment().calculateDosage(currentCat.getWeightTracker().getMostRecentWeight());
         currentDoseLabel.setText(String.format("%.2f units", dosage));
 
-        // Set the items for the TableView from the currentCat's treatment records
-        treatmentRecordsTable
-                .setItems(FXCollections.observableArrayList(currentCat.getTreatment().getTreatmentRecords()));
+        treatmentRecordsTable.setItems(FXCollections.observableArrayList(currentCat.getTreatment().getTreatmentRecords()));
     }
 
     @FXML
@@ -177,5 +167,4 @@ public class TreatmentPageController {
             new Alert(Alert.AlertType.ERROR, "Failed to load the home screen.", ButtonType.OK).show();
         }
     }
-
 }
