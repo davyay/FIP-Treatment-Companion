@@ -4,6 +4,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ExportManager {
 
@@ -26,10 +29,14 @@ public class ExportManager {
             writer.write("Treatment Records:");
             writer.newLine();
 
-            // Iterate over treatment records
-            for (Treatment.TreatmentRecord record : cat.getTreatment().getTreatmentRecords()) {
-                writer.write("Date/Time: " + record.getTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
-                        + " " + record.getTime().format(DateTimeFormatter.ofPattern("hh:mma")) +
+            // Sort and iterate over treatment records
+            List<Treatment.TreatmentRecord> sortedRecords = cat.getTreatment().getTreatmentRecords()
+                .stream()
+                .sorted(Comparator.comparing(Treatment.TreatmentRecord::getTime))
+                .collect(Collectors.toList());
+
+            for (Treatment.TreatmentRecord record : sortedRecords) {
+                writer.write("Date/Time: " + record.getTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma")) +
                         ", Dose: " + record.getDosage() + " units" +
                         ", Medication: " + record.getMedicationName());
                 writer.newLine();
