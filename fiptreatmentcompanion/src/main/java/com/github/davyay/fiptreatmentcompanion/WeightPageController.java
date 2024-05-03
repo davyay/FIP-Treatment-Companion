@@ -7,7 +7,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import java.io.IOException;
 import java.time.LocalDate;
 import javafx.scene.Parent;
@@ -19,8 +18,6 @@ public class WeightPageController {
     private LineChart<String, Number> weightChart;
     @FXML
     private TextField weightInput;
-    @FXML
-    private Label weightError;
 
     private Cat currentCat; // The Cat instance, containing the WeightTracker
     private Stage primaryStage;
@@ -37,7 +34,6 @@ public class WeightPageController {
     // Initialize method called by FXML loader
     @FXML
     private void initialize() {
-        // Initialization handled by setCat to ensure weightTracker is not null
     }
 
     // Event handler for updating weight
@@ -45,14 +41,17 @@ public class WeightPageController {
     private void handleUpdateWeight() {
         try {
             double weight = Double.parseDouble(weightInput.getText());
+            if (weight <= 0) {
+                new Alert(Alert.AlertType.ERROR, "Weight must be greater than 0.", ButtonType.OK).show();
+                return;
+            }
             LocalDate currentDate = LocalDate.now(); // Current date for the weight record
             currentCat.addWeightRecord(weight, currentDate); // Add to weight tracker through Cat
             updateChart(currentDate.toString(), weight); // Update chart
             saveCatData(); // Save the updated cat data
             weightInput.clear(); // Clear the input field
-            weightError.setText(""); // Clear error message if any
         } catch (NumberFormatException e) {
-            weightError.setText("Invalid input! Please enter a valid number."); // Display error
+            new Alert(Alert.AlertType.ERROR, "Invalid weight input.", ButtonType.OK).show();
         }
     }
 
@@ -61,7 +60,7 @@ public class WeightPageController {
             CatManager catManager = new CatManager();
             catManager.saveCatProfile(currentCat); // Specify the file path
         } catch (IOException e) {
-            weightError.setText("Failed to save data: " + e.getMessage());
+            new Alert(Alert.AlertType.ERROR, "Failed to save data: " + e.getMessage(), ButtonType.OK).show();
             e.printStackTrace();
         }
     }

@@ -45,7 +45,6 @@
          </font>
       </Text>
         <TextField fx:id="weightInput" promptText="Enter current weight (lb)" />
-        <Label fx:id="weightError" textFill="red" />
         <Button onAction="#handleUpdateWeight" text="Update Weight" />
         <Button onAction="#handleHome" text="Home" />
     </children>

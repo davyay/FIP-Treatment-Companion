@@ -58,6 +58,15 @@ public class ProfileController {
         }
     
         try {
+            if (nameField.getText().isEmpty() || dobField.getText().isEmpty() || initialWeight.getText().isEmpty() ||
+                    medicationName.getText().isEmpty() || dosageRatio.getText().isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Please fill in all fields.", ButtonType.OK).show();
+                return;
+            }
+            if (Double.parseDouble(initialWeight.getText()) <= 0 || Double.parseDouble(dosageRatio.getText()) <= 0) {
+                new Alert(Alert.AlertType.ERROR, "Please enter a positive number for weight and dosage.", ButtonType.OK).show();
+                return;
+            }
             if (currentCat == null) {
                 currentCat = new Cat(nameField.getText(), dobField.getText());
             } else {

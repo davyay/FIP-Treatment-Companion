@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.util.Callback;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -42,26 +43,33 @@ public class TreatmentPageController {
 
     @FXML
     private void initialize() {
-        dateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
-                return new SimpleStringProperty(data.getValue().getTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma")));
-            }
-        });
-    
-        doseColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
-                return new SimpleStringProperty(String.format("%.2f units", data.getValue().getDosage()));
-            }
-        });
-    
-        medicationColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
-                return new SimpleStringProperty(data.getValue().getMedicationName());
-            }
-        });
+        dateColumn.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(
+                            TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
+                        return new SimpleStringProperty(
+                                data.getValue().getTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mma")));
+                    }
+                });
+
+        doseColumn.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(
+                            TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
+                        return new SimpleStringProperty(String.format("%.2f units", data.getValue().getDosage()));
+                    }
+                });
+
+        medicationColumn.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(
+                            TableColumn.CellDataFeatures<Treatment.TreatmentRecord, String> data) {
+                        return new SimpleStringProperty(data.getValue().getMedicationName());
+                    }
+                });
     }
 
     public void setCatProfile(Cat cat) {
@@ -79,14 +87,25 @@ public class TreatmentPageController {
         catWeightLabel.setText(String.format("%.2f lb", currentCat.getWeightTracker().getMostRecentWeight()));
         double dosage = currentCat.getTreatment().calculateDosage(currentCat.getWeightTracker().getMostRecentWeight());
         currentDoseLabel.setText(String.format("%.2f units", dosage));
-    
+
         // Set the items for the TableView from the currentCat's treatment records
-        treatmentRecordsTable.setItems(FXCollections.observableArrayList(currentCat.getTreatment().getTreatmentRecords()));
+        treatmentRecordsTable
+                .setItems(FXCollections.observableArrayList(currentCat.getTreatment().getTreatmentRecords()));
     }
 
     @FXML
     private void handleUpdateTreatmentDetails() {
         try {
+            if (newMedName.getText().isEmpty() || newDosageRatio.getText().isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Please enter a medication name and dosage ratio.", ButtonType.OK)
+                        .show();
+                return;
+            }
+            if (Double.parseDouble(newDosageRatio.getText()) <= 0) {
+                new Alert(Alert.AlertType.ERROR, "Please enter a positive number for the dosage ratio.", ButtonType.OK)
+                        .show();
+                return;
+            }
             String newMedicationName = newMedName.getText().trim();
             double newRatio = Double.parseDouble(newDosageRatio.getText().trim());
             currentCat.getTreatment().updateMedicationName(newMedicationName);
@@ -97,21 +116,35 @@ public class TreatmentPageController {
             newMedName.setText(""); // Clearing the text field
             newDosageRatio.setText(""); // Clearing the text field
         } catch (NumberFormatException e) {
-            updateError.setText("Error: Invalid dosage ratio. Please enter a valid number.");
+            new Alert(Alert.AlertType.ERROR, "Invalid input! \n Please enter a valid number for the dosage ratio.",
+                    ButtonType.OK).show();
         }
     }
 
     @FXML
     private void handleRecordDose() {
         try {
-            LocalDateTime time = LocalDateTime.parse(doseDateTime.getText(),
+            if (doseDateTime.getText().isEmpty()) {
+                new Alert(Alert.AlertType.ERROR, "Please enter a date and time.", ButtonType.OK).show();
+                return;
+            }
+            LocalDateTime time = LocalDateTime.parse(doseDateTime.getText().trim(),
                     DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
+            if (LocalDate.parse(currentCat.getDateOfBirth(), DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+                    .isAfter(time.toLocalDate())) {
+                new Alert(Alert.AlertType.ERROR, "Cannot record a date and time before the cat's birth.", ButtonType.OK)
+                        .show();
+                return;
+            }
             currentCat.getTreatment().addMedicationRecord(time);
             saveCatData();
-            updateError.setText("Dose recorded successfully.");
+            updateTreatmentDetails();
             doseDateTime.setText(""); // Clearing the text field
+            updateError.setText("Dose recorded successfully.");
         } catch (DateTimeParseException e) {
-            updateError.setText("Error: Invalid date/time format. Please use MM/dd/yyyy HH:mm.");
+            new Alert(Alert.AlertType.ERROR,
+                    "Invalid date and time format. \nPlease enter in MM/dd/yyyy HH:mm format. \n(24-hour clock)",
+                    ButtonType.OK).show();
         }
     }
 
@@ -120,7 +153,7 @@ public class TreatmentPageController {
             CatManager catManager = new CatManager();
             catManager.saveCatProfile(currentCat); // Specify the file path
         } catch (IOException e) {
-            updateError.setText("Failed to save data: " + e.getMessage());
+            new Alert(Alert.AlertType.ERROR, "Failed to save data: " + e.getMessage(), ButtonType.OK).show();
             e.printStackTrace();
         }
     }

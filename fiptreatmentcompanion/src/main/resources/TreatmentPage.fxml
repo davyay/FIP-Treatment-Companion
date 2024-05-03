@@ -59,10 +59,7 @@
 
       <TextField fx:id="doseDateTime" promptText="Enter Date/Time of Dose (MM/dd/yyyy hh:mm)" />
       <Button onAction="#handleRecordDose" text="Record Dose Given" />
-      <Label fx:id="updateError" textFill="red">
-         <font>
-            <Font size="29.0" />
-         </font>
+      <Label fx:id="updateError" textFill="green">
       </Label>
       <Button onAction="#handleHome" text="Home" />
    </children>
