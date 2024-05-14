@@ -25,13 +25,16 @@ Access links to various communities that provide assistance and information that
 
 ## How to Use 
 
-Download and Install: Download the FIP Treatment Tracker jar file from github.
+Download and Install: Download the FIP Treatment Tracker jar file or exe file from github.
 
-Run jar file, if encountering any errors, attempt to run from command line using the following command: 
+JAR: Run jar file, if encountering any errors, attempt to run from command line using the following command: 
 "java --module-path "path\to\javafx-sdk-22.0.1\lib" --add-modules=javafx.controls,javafx.fxml -Dprism.order=sw -jar fiptreatmentcomapnion-1.0.jar"
 Making sure to replace "path\to\javafx-sdk-22.0.1\lib" with your actual path to your installed java fx library.
 
+EXE: Run exe file. 
+
 Add Your Cat: Enter your cat's details, including weight, age, and any other relevant information.
+(Upon creating a cat profile, a folder will be made in the directory where your EXE/JAR is located named "CatProfiles", this is where your saved profiles will go.)
 
 Set Up Medication Schedule: Input the medications prescribed for your cat and set up the dosage schedule.
 
