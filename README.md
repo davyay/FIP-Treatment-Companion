@@ -25,7 +25,11 @@ Access links to various communities that provide assistance and information that
 
 ## How to Use 
 
-Download and Install: Download the FIP Treatment Tracker app from github.
+Download and Install: Download the FIP Treatment Tracker jar file from github.
+
+Run jar file, if encountering any errors, attempt to run from command line using the following command: 
+"java --module-path "path\to\javafx-sdk-22.0.1\lib" --add-modules=javafx.controls,javafx.fxml -Dprism.order=sw -jar fiptreatmentcomapnion-1.0.jar"
+Making sure to replace "path\to\javafx-sdk-22.0.1\lib" with your actual path to your installed java fx library.
 
 Add Your Cat: Enter your cat's details, including weight, age, and any other relevant information.
 
